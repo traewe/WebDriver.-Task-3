@@ -91,73 +91,20 @@ namespace WebDriver._Task_3
         }
         public bool CheckData()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(600));
+            driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
 
-            var numberOfInstances = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]/div[2]/div[1]
-                /div[2]/div[7]/span/span[1]/span[2]")));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
-            if (numberOfInstances.Text != "4")
-            {
-                return false;
-            }
+            var elements = wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector("span[class='Kfvdz']")));
 
-            var operatingSystemOrSoftware = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div
-                /div/div[2]/div[2]/div[1]/div[2]/div[8]/span/span[1]/span[2]")));
-
-            if (operatingSystemOrSoftware.Text != "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)")
-            {
-                return false;
-            }
-
-            var provisioningModel = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]
-                /div[2]/div[1]/div[2]/div[9]/span/span[1]/span[2]")));
-
-            if (provisioningModel.Text != "Regular")
-            {
-                return false;
-            }
-
-            var machineType = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]/div[2]
-                /div[1]/div[2]/div[3]/span[2]/span[1]/span[2]")));
-
-            if (machineType.Text != "n1-standard-8, vCPUs: 8, RAM: 30 GB")
-            {
-                return false;
-            }
-
-            var GPUModel = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]/div[2]
-                /div[1]/div[2]/div[4]/span[2]/span[1]/span[2]")));
-
-            if (GPUModel.Text != "NVIDIA Tesla V100")
-            {
-                return false;
-            }
-
-            var numberOfGPUs = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]/div[2]
-                /div[1]/div[2]/div[4]/span[3]/span[1]/span[2]")));
-
-            if (numberOfGPUs.Text != "1")
-            {
-                return false;
-            }
-
-            var localSSD = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]/div[2]
-                /div[1]/div[2]/div[5]/span/span[1]/span[2]")));
-
-            if (localSSD.Text != "2x375 GB")
-            {
-                return false;
-            }
-
-            var datacenterLocation = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(@"/html/body/c-wiz[1]/div/div/div/div/div[2]
-                /div[2]/div[1]/div[2]/div[15]/span/span[1]/span[2]")));
-
-            if (datacenterLocation.Text != "Netherlands (europe-west4)")
-            {
-                return false;
-            }
-
-            return true;
+            return elements[9].Text == "4"
+                && elements[10].Text == "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)"
+                && elements[11].Text == "Regular"
+                && elements[2].Text == "n1-standard-8, vCPUs: 8, RAM: 30 GB"
+                && elements[4].Text == "NVIDIA Tesla V100"
+                && elements[5].Text == "1"
+                && elements[6].Text == "2x375 GB"
+                && elements[17].Text == "Netherlands (europe-west4)";
         }
     }
 }
